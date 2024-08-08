@@ -5,7 +5,7 @@ import {
   Outlet,
   ScrollRestoration,
 } from "react-router-dom";
-import Home from "./pages/Home";
+// import Home from "./pages/Home";
 import Users from "./pages/Users";
 import Products from "./pages/Products";
 import Navbar from "./components/Navbar";
@@ -25,6 +25,7 @@ import User from "./pages/User";
 import Product from "./pages/Product";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Complaints from "./pages/Complaints.tsx";
 
 function App() {
   const Layout = () => {
@@ -58,7 +59,11 @@ function App() {
       children: [
         {
           path: "/",
-          element: <Home />,
+          element: <Complaints />,
+        },
+        {
+          path: "/complaints",
+          element: <Complaints />,
         },
         {
           path: "/profile",
@@ -118,6 +123,10 @@ function App() {
     {
       path: "/register",
       element: <Register />,
+    },
+    {
+      path: "/complaints",
+      element: <Complaints />,
     },
   ]);
 

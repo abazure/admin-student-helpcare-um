@@ -273,3 +273,33 @@ export const fetchLogs = async () => {
 
   return response;
 };
+
+// import axios from 'axios';
+
+export const fetchComplaints = async () => {
+    // Retrieve token from local storage
+    const token = localStorage.getItem('authToken');
+    console.log(token)
+
+    if (!token) {
+        throw new Error('No authentication token found');
+    }
+
+    try {
+        const response = await axios.get(
+            'http://localhost:3000/api/admin/complaints',
+            {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }
+        );
+
+        console.log('axios get:', response.data);
+        return response.data;
+    } catch (err) {
+        console.error(err);
+        throw err;
+    }
+};
+
