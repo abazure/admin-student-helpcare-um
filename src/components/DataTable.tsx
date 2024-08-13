@@ -1,5 +1,5 @@
 import React from 'react';
-import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid';
+import {DataGrid, GridColDef, GridToolbar} from '@mui/x-data-grid';
 
 interface DataTableProps {
     columns: GridColDef[];
@@ -7,7 +7,12 @@ interface DataTableProps {
     slug: string;
 }
 
-const DataTable: React.FC<DataTableProps> = ({ columns, rows }) => {
+interface DataTableProps {
+    includeActionColumn?: boolean
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const DataTable: React.FC<DataTableProps> = ({columns, rows}) => {
     return (
         <div className="w-full bg-base-100 text-base-content">
             <DataGrid
@@ -22,11 +27,11 @@ const DataTable: React.FC<DataTableProps> = ({ columns, rows }) => {
                         },
                     },
                 }}
-                slots={{ toolbar: GridToolbar }}
+                slots={{toolbar: GridToolbar}}
                 slotProps={{
                     toolbar: {
                         showQuickFilter: true,
-                        quickFilterProps: { debounceMs: 500 },
+                        quickFilterProps: {debounceMs: 500},
                     },
                 }}
                 pageSizeOptions={[5]}

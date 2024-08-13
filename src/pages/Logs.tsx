@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import { fetchLogs } from '../api/ApiCollection';
 
+
 const Logs = () => {
   const { isLoading, isError, isSuccess, data } = useQuery({
     queryKey: ['all-logs'],
@@ -95,6 +96,7 @@ const Logs = () => {
       });
     }
   }, [isError, isLoading, isSuccess]);
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   return (
     // screen
     <div className="w-full p-0 m-0">

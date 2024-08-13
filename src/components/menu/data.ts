@@ -3,7 +3,6 @@ import {
   // HiOutlineHome,
   // HiOutlineUser,
   // HiOutlineUsers,
-  HiOutlineCube,
   // HiOutlineClipboardDocumentList,
   // HiOutlineDocumentChartBar,
   // HiOutlinePencilSquare,
