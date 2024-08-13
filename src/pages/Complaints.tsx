@@ -1,17 +1,59 @@
 import React from 'react';
 import { GridColDef } from '@mui/x-data-grid';
 import DataTable from '../components/DataTable';
-import { fetchComplaints } from '../api/ApiCollection'; // Assuming this is the function to fetch complaints
-import { useQuery } from '@tanstack/react-query';
+import { fetchComplaints, updateComment } from '../api/ApiCollection';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import AddData from '../components/AddData';
+import EditIcon from '@mui/icons-material/Edit';
 
 const Complaints = () => {
     const [isOpen, setIsOpen] = React.useState(false);
+    const [editingId, setEditingId] = React.useState<string | null>(null);
+    const [newComment, setNewComment] = React.useState('');
+
+    const queryClient = useQueryClient();
+
     const { isLoading, isError, isSuccess, data } = useQuery({
         queryKey: ['allcomplaints'],
         queryFn: fetchComplaints,
     });
+
+    const mutation = useMutation({
+        mutationFn: ({ id, comment }: { id: string; comment: string }) => updateComment(id, comment),
+        onSuccess: () => {
+            toast.success('Comment updated successfully!');
+            queryClient.invalidateQueries(['allcomplaints']);
+        },
+        onError: () => {
+            toast.error('Error updating comment');
+        },
+    });
+
+    const handleEdit = (id: string, currentComment: string) => {
+        setEditingId(id);
+        setNewComment(currentComment);
+    };
+
+    const handleUpdateComment = () => {
+        if (editingId && newComment.trim()) {
+            mutation.mutate({ id: editingId, comment: newComment });
+            setEditingId(null);
+            setNewComment('');
+        }
+    };
+
+    React.useEffect(() => {
+        if (isLoading) {
+            toast.loading('Loading...', { id: 'promiseComplaints' });
+        }
+        if (isError) {
+            toast.error('Error while getting the data!', { id: 'promiseComplaints' });
+        }
+        if (isSuccess) {
+            toast.success('Got the data successfully!', { id: 'promiseComplaints' });
+        }
+    }, [isError, isLoading, isSuccess]);
 
     const columns: GridColDef[] = [
         { field: 'name', headerName: 'Name', width: 150 },
@@ -34,23 +76,21 @@ const Complaints = () => {
             minWidth: 150,
             flex: 1,
         },
+        {
+            field: 'actions',
+            headerName: 'Actions',
+            width: 100,
+            renderCell: (params) => (
+                <div className="flex justify-center items-center">
+                    <EditIcon
+                        onClick={() => handleEdit(params.row.id, params.row.comment || '')}
+                        className="cursor-pointer"
+                        color="primary"
+                    />
+                </div>
+            ),
+        },
     ];
-
-    React.useEffect(() => {
-        if (isLoading) {
-            toast.loading('Loading...', { id: 'promiseComplaints' });
-        }
-        if (isError) {
-            toast.error('Error while getting the data!', {
-                id: 'promiseComplaints',
-            });
-        }
-        if (isSuccess) {
-            toast.success('Got the data successfully!', {
-                id: 'promiseComplaints',
-            });
-        }
-    }, [isError, isLoading, isSuccess]);
 
     return (
         <div className="w-full p-2 m-0">
@@ -66,12 +106,6 @@ const Complaints = () => {
                             </span>
                         )}
                     </div>
-                    <button
-                        onClick={() => setIsOpen(true)}
-                        className={`btn ${isLoading ? 'btn-disabled' : 'btn-primary'}`}
-                    >
-                        Add New Complaint +
-                    </button>
                 </div>
 
                 {isLoading ? (
@@ -79,14 +113,12 @@ const Complaints = () => {
                         slug="complaints"
                         columns={columns}
                         rows={[]}
-                        includeActionColumn={true}
                     />
                 ) : isSuccess ? (
                     <DataTable
                         slug="complaints"
                         columns={columns}
-                        rows={data?.data || []} // Adjusting based on the API response structure
-                        includeActionColumn={true}
+                        rows={data?.data || []}
                     />
                 ) : (
                     <>
@@ -94,12 +126,42 @@ const Complaints = () => {
                             slug="complaints"
                             columns={columns}
                             rows={[]}
-                            includeActionColumn={true}
                         />
                         <div className="text-center text-red-500">
                             Error while getting the data!
                         </div>
                     </>
+                )}
+
+                {editingId !== null && (
+                    <div className="modal modal-open">
+                        <div className="modal-box">
+                            <h2 className="text-lg font-bold">Edit Comment</h2>
+                            <textarea
+                                value={newComment}
+                                onChange={(e) => setNewComment(e.target.value)}
+                                className="textarea textarea-bordered w-full"
+                                rows={4}
+                            />
+                            <div className="modal-action">
+                                <button
+                                    onClick={handleUpdateComment}
+                                    className="btn btn-primary"
+                                >
+                                    Save
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        setEditingId(null);
+                                        setNewComment('');
+                                    }}
+                                    className="btn"
+                                >
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 )}
 
                 {isOpen && (

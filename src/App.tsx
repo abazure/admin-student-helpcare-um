@@ -12,7 +12,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Menu from "./components/menu/Menu";
 import Error from "./pages/Error";
-import Profile from "./pages/Profile";
+// import Profile from "./pages/Profile";
 import Orders from "./pages/Orders";
 import Posts from "./pages/Posts";
 import Notes from "./pages/Notes";
@@ -26,6 +26,7 @@ import Product from "./pages/Product";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Complaints from "./pages/Complaints.tsx";
+import ProtectedRoute from "./components/auth/ProtectedRoute.tsx";
 
 function App() {
   const Layout = () => {
@@ -59,15 +60,15 @@ function App() {
       children: [
         {
           path: "/",
-          element: <Complaints />,
+          element:<ProtectedRoute element={<Complaints />}/>,
         },
         {
           path: "/complaints",
-          element: <Complaints />,
+          element: <ProtectedRoute element={<Complaints/>}/>,
         },
         {
           path: "/profile",
-          element: <Profile />,
+          element: <Complaints />,
         },
         {
           path: "/profile/edit",

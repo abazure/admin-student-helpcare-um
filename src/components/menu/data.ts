@@ -10,9 +10,11 @@ import {
   // HiOutlineCalendarDays,
   // HiOutlinePresentationChartBar,
   // HiOutlineDocumentText,
-  HiOutlineArrowLeftOnRectangle,
+  HiOutlineArrowLeftOnRectangle, HiBellAlert,
 } from 'react-icons/hi2';
 // import { IoSettingsOutline } from 'react-icons/io5';
+// import { ReactComponent as ComplaintsIcon } from "../../assets/complaint.svg";
+
 
 export const menu = [
   // {
@@ -50,7 +52,7 @@ export const menu = [
       {
         isLink: true,
         url: '/complaints',
-        icon: HiOutlineCube,
+        icon: HiBellAlert,
         label: 'complaints',
       },
       // {

@@ -24,14 +24,12 @@ const Login = () => {
     };
 
     try {
-      const response = await axios.post<{ token: string }>('http://localhost:3000/api/admin/login', requestData);
+      const response = await axios.post<{ token: string }>('https://student-helpcare-um.vercel.app/api/admin/login', requestData);
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
       const token = response.data.data.token!
-
-      // Handle the token (e.g., store in localStorage or context)
+      console.log(token)
       localStorage.setItem('authToken', token);
-
       toast.success('Login successful! Redirecting...');
       setTimeout(() => navigate('/complaints'), 2000); // Redirect after 2 seconds
     } catch (error) {
@@ -54,7 +52,7 @@ const Login = () => {
             </span>
             </div>
             <span className="xl:text-xl font-semibold">
-            Login
+            Login Akun Admin
           </span>
             <div className="w-full flex flex-col items-stretch gap-3">
               <label className="input input-bordered min-w-full flex items-center gap-2">

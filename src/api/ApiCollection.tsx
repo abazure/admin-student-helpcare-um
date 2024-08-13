@@ -275,31 +275,69 @@ export const fetchLogs = async () => {
 };
 
 // import axios from 'axios';
+interface Complaint {
+    id: string;
+    name: string;
+    email: string;
+    description: string;
+    is_responded: boolean;
+    comment: string;
+}
 
-export const fetchComplaints = async () => {
-    // Retrieve token from local storage
+interface FetchComplaintsResponse {
+    length: number;
+    data: Complaint[];
+}
+export const fetchComplaints = async (): Promise<FetchComplaintsResponse> => {
     const token = localStorage.getItem('authToken');
-    console.log(token)
+    console.log(token);
 
     if (!token) {
         throw new Error('No authentication token found');
     }
 
     try {
-        const response = await axios.get(
-            'http://localhost:3000/api/admin/complaints',
-            {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
+        const response = await axios.get<FetchComplaintsResponse>('https://student-helpcare-um.vercel.app/api/admin/complaints', {
+            headers: {
+                'Authorization': `Bearer ${token}`
             }
-        );
+        });
 
         console.log('axios get:', response.data);
         return response.data;
     } catch (err) {
-        console.error(err);
-        throw err;
+        console.error('Error fetching complaints:', err);
+        throw new Error('Error fetching complaints');
     }
 };
+
+
+// api/ApiCollection.js
+
+
+export const updateComment = async (id: string, comment: string): Promise<void> => {
+    const token = localStorage.getItem('authToken');
+
+    if (!token) {
+        throw new Error('No authentication token found');
+    }
+
+    try {
+        await axios.put(
+            `https://student-helpcare-um.vercel.app/api/admin/complaints/${id}`,
+            { comment },
+            {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+    } catch (err) {
+        console.error('Error updating comment:', err);
+        throw new Error('Error updating comment');
+    }
+};
+
+
 

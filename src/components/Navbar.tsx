@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { HiBars3CenterLeft } from 'react-icons/hi2';
-import { DiReact } from 'react-icons/di';
+// import { DiReact } from 'react-icons/di';
 import { HiSearch, HiOutlineBell } from 'react-icons/hi';
 import { RxEnterFullScreen, RxExitFullScreen } from 'react-icons/rx';
 import ChangeThemes from './ChangesThemes';
@@ -84,9 +84,10 @@ const Navbar = () => {
 
         {/* navbar logo */}
         <Link to={'/'} className="flex items-center gap-1 xl:gap-2">
-          <DiReact className="text-3xl sm:text-4xl xl:text-4xl 2xl:text-6xl text-primary animate-spin-slow" />
-          <span className="text-[16px] leading-[1.2] sm:text-lg xl:text-xl 2xl:text-2xl font-semibold text-base-content dark:text-neutral-200">
-            React Dashboard
+          <img src={UM} alt="" className="h-10"/>
+          <span
+              className="text-[16px] leading-[1.2] sm:text-lg xl:text-xl 2xl:text-2xl font-semibold text-base-content dark:text-neutral-200">
+            Student Helpcare UM
           </span>
         </Link>
       </div>
@@ -118,16 +119,16 @@ const Navbar = () => {
         </button>
 
         {/* notification */}
-        <button
-          onClick={() =>
-            toast('Gaada notif!', {
-              icon: '😠',
-            })
-          }
-          className="px-0 xl:px-auto btn btn-circle btn-ghost"
-        >
-          <HiOutlineBell className="text-xl 2xl:text-2xl 3xl:text-3xl" />
-        </button>
+        {/*<button*/}
+        {/*  onClick={() =>*/}
+        {/*    toast('Gaada notif!', {*/}
+        {/*      icon: '😠',*/}
+        {/*    })*/}
+        {/*  }*/}
+        {/*  className="px-0 xl:px-auto btn btn-circle btn-ghost"*/}
+        {/*>*/}
+        {/*  <HiOutlineBell className="text-xl 2xl:text-2xl 3xl:text-3xl" />*/}
+        {/*</button>*/}
 
         {/* theme */}
         <div className="px-0 xl:px-auto btn btn-circle btn-ghost xl:mr-1">
@@ -143,7 +144,7 @@ const Navbar = () => {
           >
             <div className="w-9  rounded-full">
               <img
-                src="https://avatars.githubusercontent.com/u/74099030?v=4"
+                src="https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=um"
                 alt="foto-cowok-ganteng"
               />
             </div>
