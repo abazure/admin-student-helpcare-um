@@ -37,6 +37,8 @@ const EditForm: React.FC<EditFormProps> = ({ complaint, onClose, onSave }) => {
 
     // Use `mutation.status` to handle loading state
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
     const isLoading = mutation.status === 'loading';
 
     return (

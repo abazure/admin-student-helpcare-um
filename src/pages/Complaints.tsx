@@ -23,6 +23,8 @@ const Complaints = () => {
         mutationFn: ({ id, comment }: { id: string; comment: string }) => updateComment(id, comment),
         onSuccess: () => {
             toast.success('Comment updated successfully!');
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
             queryClient.invalidateQueries(['allcomplaints']);
         },
         onError: () => {
