@@ -91,9 +91,9 @@ const Login = () => {
               </button>
               <div className="w-full text-center mt-4">
               <span className="text-sm">
-                Forgot your password?{' '}
-                <a href="/forgot-password" className="text-blue-500 hover:underline">
-                  Reset here
+                Belum punya akun?{' '}
+                <a href="/register" className="text-blue-500 hover:underline">
+                  Daftar
                 </a>
               </span>
               </div>
